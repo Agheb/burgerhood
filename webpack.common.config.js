@@ -14,7 +14,8 @@ module.exports = {
         }, {
             test: /\.html$/,
             loader: 'file?name=[name].[ext]'
-        }, {
+        }, 
+        {
             test: /\.(jpe?g|png|gif)$/,
             exclude: /(node_modules)/,
             loader: 'url-loader?limit=10000'
@@ -35,6 +36,7 @@ module.exports = {
             jQuery: 'jquery',
             "window.jQuery": 'jquery',
             "windows.jQuery": 'jquery',
+            "Tether": 'tether'
         })
     ],
     resolve: {
