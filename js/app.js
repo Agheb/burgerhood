@@ -1,20 +1,47 @@
 import "../css/app.scss";
 import $ from "jquery";
 import "../node_modules/bootstrap/dist/js/bootstrap.min.js";
-import "waypoints";
-import "scrollTo";
-import {request} from "graphql-request";
 
-const query = `{
-  Movie(title: "Inception") {
-    releaseDate
-    actors {
-      name
+const gql_query = `{ business(id: "yelp-san-francisco") 
+            { 
+              name 
+              id 
+              coordinates { 
+                latitude 
+                longitude 
+              } 
+            } 
+          }`;
+
+function query(gql_string){
+
+  const query_url =
+  "http://localhost:5000/graphql/" + gql_string.replace(/(\r\n|\n|\r)/gm, "");
+
+  fetch(query_url, {
+  method: "post"
+})
+  .then(function(response) {
+    if (response.status !== 200) {
+      console.log(
+        "Looks like there was a problem. Status Code: " + response.status
+      );
+      return;
     }
-  }
-}`
-  
-request('https://api.graph.cool/simple/v1/movies', query).then(data => console.log(data))
+    // Examine the text in the response
+    response.json().then(function(data) {
+      console.log(data);
+    });
+  })
+  .catch(function(err) {
+    console.log("Fetch Error :-S", err);
+  });
+
+}
+
+query(gql_query);
+
+
 
 document.addEventListener("DOMContentLoaded", function() {
   if (document.querySelectorAll("#map").length > 0) {
@@ -37,4 +64,4 @@ function initMap() {
     zoom: 8
   });
 }
-window.initMap = initMap; //global scope 
+window.initMap = initMap; //global scope
