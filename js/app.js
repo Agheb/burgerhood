@@ -4,21 +4,19 @@ import "../node_modules/bootstrap/dist/js/bootstrap.min.js";
 import {query} from "./gql.js"
 var ko = require('knockout');
 
-var viewModel = {
-  items: [ { Name: "Apple part" }, { Name: "Apple sauce" }, { Name: "Apple juice" }, { Name: "Pear juice" }, { Name: "Pear mush" }, { Name: "Something different" } ]
-};
+var LocationModel = require('../locations.json');
 
-viewModel.Query = ko.observable('');
+LocationModel.Query = ko.observable('');
 
-viewModel.searchResults = ko.computed(function() {
-    var q = viewModel.Query().toLowerCase();
-    return viewModel.items.filter(function(i) {
-      return i.Name.toLowerCase().indexOf(q) >= 0;
+LocationModel.searchResults = ko.computed(function() {
+    var q = LocationModel.Query().toLowerCase();
+    return LocationModel.locations.filter(function(i) {
+      return i.name.toLowerCase().indexOf(q) >= 0;
     });
 });
 
 
-ko.applyBindings(viewModel, document.getElementById('root'));
+ko.applyBindings(LocationModel, document.getElementById('root'));
 
 
 

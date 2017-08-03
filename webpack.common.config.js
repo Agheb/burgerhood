@@ -14,7 +14,12 @@ module.exports = {
         }, {
             test: /\.html$/,
             loader: 'file?name=[name].[ext]'
-        }, 
+        },
+        {
+            test: /\.json$/,
+            exclude: /(node_modules)/,
+            loader: 'json-loader'
+        },
         {
             test: /\.(jpe?g|png|gif)$/,
             exclude: /(node_modules)/,
