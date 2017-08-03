@@ -1,7 +1,28 @@
 import "../css/app.scss";
 import $ from "jquery";
 import "../node_modules/bootstrap/dist/js/bootstrap.min.js";
+import {query} from "./gql.js"
+var ko = require('knockout');
 
+var viewModel = {
+  items: [ { Name: "Apple part" }, { Name: "Apple sauce" }, { Name: "Apple juice" }, { Name: "Pear juice" }, { Name: "Pear mush" }, { Name: "Something different" } ]
+};
+
+viewModel.Query = ko.observable('');
+
+viewModel.searchResults = ko.computed(function() {
+    var q = viewModel.Query().toLowerCase();
+    return viewModel.items.filter(function(i) {
+      return i.Name.toLowerCase().indexOf(q) >= 0;
+    });
+});
+
+
+ko.applyBindings(viewModel, document.getElementById('root'));
+
+
+
+/*
 const gql_query = `{ business(id: "yelp-san-francisco") 
             { 
               name 
@@ -12,35 +33,8 @@ const gql_query = `{ business(id: "yelp-san-francisco")
               } 
             } 
           }`;
-
-function query(gql_string){
-
-  const query_url =
-  "http://localhost:5000/graphql/" + gql_string.replace(/(\r\n|\n|\r)/gm, "");
-
-  fetch(query_url, {
-  method: "post"
-})
-  .then(function(response) {
-    if (response.status !== 200) {
-      console.log(
-        "Looks like there was a problem. Status Code: " + response.status
-      );
-      return;
-    }
-    // Examine the text in the response
-    response.json().then(function(data) {
-      console.log(data);
-    });
-  })
-  .catch(function(err) {
-    console.log("Fetch Error :-S", err);
-  });
-
-}
-
 query(gql_query);
-
+*/
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -58,10 +52,10 @@ var map;
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: {
-      lat: -34.397,
-      lng: 150.644
+      lat: 48.137459,
+      lng: 11.575231
     },
-    zoom: 8
+    zoom: 14
   });
 }
 window.initMap = initMap; //global scope

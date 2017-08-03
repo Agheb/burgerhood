@@ -2,17 +2,17 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Webpack Boilerplate</title>
-    <link rel="icon" type="image/png" href="images/favicon.png" />
-    <link rel="stylesheet" type="text/css" href="build/style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Webpack Boilerplate</title>
+  <link rel="icon" type="image/png" href="images/favicon.png" />
+  <link rel="stylesheet" type="text/css" href="build/style.css" />
 </head>
 
 <body>
-<nav class="navbar navbar-light bg-faded">
+  <nav class="navbar navbar-light bg-faded">
     <a class="navbar-brand" href="#">
             <img src="images/logo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
             Burger Joint
@@ -21,23 +21,29 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-2 text-container">
-        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-          magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-          gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
-          elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
-          eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-          dolor sit amet.</p>
+        <div class="input-group py-3">
+          <input type="text" class="form-control" data-bind="value: Query, valueUpdate: 'keyup'" placeholder="Search">
+        </div>
+        <div data-bind="foreach: searchResults">
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+          <div class="d-flex w-100 justify-content-between">
+            <h6 class="mb-1" data-bind="text: Name"></h6>
+          </div>
+          <p class="mb-1">Donec id elit non mi porta gravida at eget metus</p>
+          <small class="text-muted">Donec id elit non mi porta.</small>
+        </a>
+        </div>
       </div>
       <div class="col-md-10 no-gutter">
         <div style="height:100%; width: 100%;">
           <div id="map"></div>
         </div>
-        
+
       </div>
     </div>
   </div>
-    <!--EXAMPLE PAGE ENDS-->
-    <script src="build/bundle.js"></script>
+  <!--EXAMPLE PAGE ENDS-->
+  <script src="build/bundle.js"></script>
 </body>
 
 </html>
