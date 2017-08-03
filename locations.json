@@ -1,0 +1,35 @@
+{
+  "locations": [
+    {
+      "name": "Hamburgerei",
+      "coordinates": [48.146858, 11.561007],
+      "address": "Brienner Str. 49, 80333 Munich",
+      "yelp_id": "hamburgerei-münchen"
+    },
+    {
+      "name": "Burger House",
+      "coordinates": [48.127849, 11.597385],
+      "address": "Lothringerstr. 7 81667 Munich",
+      "yelp_id": "burger-house-münchen"
+    },
+    {
+      "name": "Ruff’s Burger",
+      "coordinates": [48.146858, 11.561007],
+      "address": "Rindermarkt 6 80331 Munich",
+      "yelp_id": "ruffs-burger-münchen-3"
+    },
+    {
+      "name": "Jones",
+      "coordinates": [48.145508, 11.558672],
+      "address": "Karlstr. 56 80333 Munich",
+      "yelp_id": "jones-münchen-2"
+    },
+    {
+      "name": "Burger & Lobster Bank",
+      "coordinates": [48.146858, 11.561007],
+      "address": "Prannerstr. 11 80333 Munich",
+      "yelp_id": "burger-und-lobster-bank-münchen"
+
+    }
+  ]
+}
