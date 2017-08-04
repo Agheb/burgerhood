@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import requests
 from flask import Flask, jsonify
 from flask_restful import Resource, Api
@@ -17,11 +18,16 @@ class ProxyQuery(Resource):
                       "-kYau2nY8C68Z7WXYx")
         headers = {'Authorization': yelp_token,
                    'Content-Type': 'application/graphql'}
+
         r = requests.post(url, headers=headers, data=query)
-        return jsonify(r.json())
+
+        if r.status_code == requests.codes.ok:
+            return r.text
+        else:
+            return r.status_code
 
 
-api.add_resource(ProxyQuery, '/graphql/<string:query>')
+api.add_resource(ProxyQuery, '/graphql/<query>')
 
 
 if __name__ == '__main__':
