@@ -10,7 +10,9 @@ var map;
 var infoWindow;
 
 
+
 function initMap() {
+  // initialize  map and InfoWindow
   map = new google.maps.Map(document.getElementById("map"), {
     center: {
       lat: 48.137459,
@@ -23,7 +25,9 @@ function initMap() {
         content: ''
     });
 }
-window.initMap = initMap; //global scope
+window.initMap = initMap; // add function to global scope (https://stackoverflow.com/questions/40575637/how-to-use-webpack-with-google-maps-api)
+
+
 
 var Location = function(data) {
   this.name = data.name;
@@ -31,19 +35,22 @@ var Location = function(data) {
   this.long = data.coordinates[1];
   this.address = data.address;
   this.id = data.yelp_id;
-  this.visible = ko.observable(true);
+  // fire click event from list view 
   this.clickInfoView = () => {
     let _this = this;
     createInfoView(this);
   };
-  // Set Marker
+
+  // Set marker
   this.marker = new google.maps.Marker({
     position: new google.maps.LatLng(this.lat, this.long),
     map: map,
     title: data.name
   });
 
+  // set InfoWindow 
   this.infowindow = new google.maps.InfoWindow();
+
 
   this.marker.addListener("click", () => {
     let _this = this;
@@ -51,8 +58,10 @@ var Location = function(data) {
   });
 };
 
+
 var ViewModel = function() {
   this.locationsList = ko.observableArray([]);
+  // load data from locations.json  file 
   LocationModel.locations.map(location => {
     this.locationsList.push(new Location(location));
   });
@@ -63,11 +72,13 @@ var ViewModel = function() {
   this.searchResults = ko.computed(() => {
     return this.locationsList().filter(location => {
       if (
+        // checks if searchquery is substring of any location name  
         location.name.toLowerCase().indexOf(this.Query().toLowerCase()) >= 0
       ) {
         location.marker.setVisible(true);
         return true;
       } else {
+        // no match therefor markers removed from map 
         location.marker.setVisible(false);
         return false;
       }
@@ -75,14 +86,12 @@ var ViewModel = function() {
   });
 };
 
-function app() {
-  initMap();
-  ko.applyBindings(new ViewModel());
-}
-window.app = app;
+
 
 function createContentString(data) {
-  // show User if business is open or not
+   // create template strings for infoWindow from API Response
+  
+   // text color if business is open 
   let b_open = '<span class="text-success">Open</span>';
   let b_closed = '<span class="text-danger">Closed</span>';
   // Content String
@@ -137,16 +146,19 @@ function createContentString(data) {
 }
 
 function createInfoView(clickedBusiness) {
+
   infoWindow.close();
+
   // animate marker
   clickedBusiness.marker.setAnimation(google.maps.Animation.BOUNCE);
   setTimeout(() => {
     clickedBusiness.marker.setAnimation(null);
   }, 750);
 
-  // Wrapper for GraphQL Client
+  // execute API request via GraphQL asynchronously
   query(API_ENDPOINT, clickedBusiness.id)
     .then(response => {
+      // OK !  
       let data = response.data.business;
       let content = createContentString(data);
         infoWindow.setContent(content);
@@ -155,8 +167,15 @@ function createInfoView(clickedBusiness) {
         clickedBusiness.marker
       );
     })
+    // NOT OK ! inform user gracefully 
     .catch(error => {
       alert(error.msg);
       console.error(error);
     });
 }
+
+function app() {
+  initMap();
+  ko.applyBindings(new ViewModel());
+}
+window.app = app; 

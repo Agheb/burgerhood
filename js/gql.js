@@ -1,8 +1,9 @@
 export function query(url,business_id) {
-  // Wrapping fetch
-  var yelp_id = business_id;
+ // Simple GraphQL client for Yelp GraphQL API 
+ 
+ var yelp_id = business_id;
 
-  // raw GraphQL Query
+  // raw GraphQL query string according to Documentation.Thanks to ES6 similiar like in Python
   const query_template = `{
   business(id: "${yelp_id}") {
     name
@@ -18,7 +19,7 @@ export function query(url,business_id) {
     }
   }
 }`;
-
+  
   const g_header = { method: "POST", body: query_template };
 
   return fetch(url, g_header).then(handleResponse, handleNetworkError);
