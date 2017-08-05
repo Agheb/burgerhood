@@ -101,7 +101,6 @@ function createContentString(data){
     // show User if business is open or not 
     let b_open = '<span class="text-success">Open</span>';
     let b_closed = '<span class="text-danger">Closed</span>';
-    console.log("Hallo"+data.hours[0].is_open_now);
     // Content String
     let contentString =
       `<div class="card no-border" style="width: 20rem;">
@@ -140,7 +139,7 @@ function createContentString(data){
       data.location.formatted_address +
       `</p>
     <p class="card-text">` +
-      (data.hours.is_open_now ? b_open : b_closed) +
+      (data.hours[0].is_open_now ? b_open : b_closed) +
       `</p>
   </div> 
   <div class="card-block">
