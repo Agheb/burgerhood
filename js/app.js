@@ -48,18 +48,6 @@ var Location = function(data) {
   this.address = data.address;
   this.id = data.yelp_id;
   this.visible = ko.observable(true);
-  this.yelp;
-  // query Yelp API via GraphQL
-  query(API_ENDPOINT, this.id)
-    .then(response => {
-      let business_data = response.data.business;
-      this.yelp = business_data;
-    })
-    .catch(error => {
-      console.error(error);
-    });
-
-  // Info Window
 
   // Set Marker
   this.marker = new google.maps.Marker({
@@ -68,72 +56,27 @@ var Location = function(data) {
     title: data.name
   });
 
-  // Eventlistener Click
+  this.infowindow = new google.maps.InfoWindow();
+
+
   this.marker.addListener("click", () => {
+    // animate marker 
+    this.marker.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(() => {
+      this.marker.setAnimation(null);
+    }, 1500);
 
-      var animate = this.marker.setAnimation(google.maps.Animation.BOUNCE);
-      setTimeout(() => {this.marker.setAnimation(null); }, 1500);
-    
-    // Create an infoView
-    var yelp_id = this.id;
-    // helper variables to indicate if business is open
-    let b_open = '<span class="text-success">Open</span>';
-    let b_closed = '<span class="text-danger">Closed</span>';
-
-    // Content String
-    let contentString =
-      `<div class="card no-border" style="width: 20rem;">
-  <div class="card-block">
-    <h4 class="card-title">` +
-      this.yelp.name +
-      `</h4>
-  </div>
-  <div class="px-3">
-  <table class="table table-m">
-  <thead>
-    <tr>
-      <th>Rating</th>
-      <th>Reviews</th>
-      <th>Price</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>` +
-      this.yelp.rating +
-      `</td>
-      <td>` +
-      this.yelp.review_count +
-      `</td>
-      <td>` +
-      this.yelp.price +
-      `</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<div class="card-block">
-    <p class="card-text">` +
-      this.yelp.location.formatted_address +
-      `</p>
-    <p class="card-text">` +
-      (this.yelp.hours.is_open_now ? b_open : b_closed) +
-      `</p>
-  </div> 
-  <div class="card-block">
-     <a href="` +
-      this.yelp.url +
-      `class="card-link">More Information </a>
-  </div>
-</div>`;
-
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-
-    // attach infowindow to marker
-    infowindow.open(this.marker.get("map"), this.marker);
+    // Wrapper for GraphQL Client  
+    query(API_ENDPOINT, this.id)
+      .then(response => {
+        let data = response.data.business;
+        let content = createContentString(data);
+        this.infowindow.setContent(content);
+        this.infowindow.open(this.marker.get("map"), this.marker);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   });
 };
 
@@ -169,14 +112,58 @@ function app() {
 }
 window.app = app;
 
-function createInfoWindowContent(yelp_id) {
-  // GraphQL Query
-}
+function createContentString(data){
+    // show User if business is open or not 
+    let b_open = '<span class="text-success">Open</span>';
+    let b_closed = '<span class="text-danger">Closed</span>';
 
-function animateMarker() {
-  if (this.marker.getAnimation() != null) {
-    this.marker.setAnimation(null);
-  } else {
-    this.marker.setAnimation(google.maps.Animation.BOUNCE);
-  }
-}
+    // Content String
+    let contentString =
+      `<div class="card no-border" style="width: 20rem;">
+  <div class="card-block">
+    <h4 class="card-title">` +
+      data.name +
+      `</h4>
+  </div>
+  <div class="px-3">
+  <table class="table table-m">
+  <thead>
+    <tr>
+      <th>Rating</th>
+      <th>Reviews</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>` +
+      data.rating +
+      `</td>
+      <td>` +
+      data.review_count +
+      `</td>
+      <td>` +
+      data.price +
+      `</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="card-block">
+    <p class="card-text">` +
+      data.location.formatted_address +
+      `</p>
+    <p class="card-text">` +
+      (data.hours.is_open_now ? b_open : b_closed) +
+      `</p>
+  </div> 
+  <div class="card-block">
+     <a href="` +
+      data.url +
+      `class="card-link">More Information </a>
+  </div>
+</div>`;
+
+return contentString;
+};
