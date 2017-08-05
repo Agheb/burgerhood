@@ -5,9 +5,10 @@ import { query } from "./gql.js";
 var ko = require("knockout");
 var LocationModel = require("../locations.json");
 
-const API_ENDPOINT = 'http://localhost:5000/graphql' // subject for change e.g. production 
+const API_ENDPOINT = "http://localhost:5000/graphql"; // subject for change e.g. production
 var map;
- 
+var killAnimation;
+
 document.addEventListener("DOMContentLoaded", function() {
   if (document.querySelectorAll("#map").length > 0) {
     var js_file = document.createElement("script");
@@ -49,13 +50,13 @@ var Location = function(data) {
   this.visible = ko.observable(true);
   this.yelp;
   // query Yelp API via GraphQL
-  query(API_ENDPOINT,this.id)
-    .then( response => {
-        let business_data = response.data.business;
-        this.yelp = business_data;
+  query(API_ENDPOINT, this.id)
+    .then(response => {
+      let business_data = response.data.business;
+      this.yelp = business_data;
     })
-    .catch( error => {
-        console.error(error);
+    .catch(error => {
+      console.error(error);
     });
 
   // Info Window
@@ -69,15 +70,23 @@ var Location = function(data) {
 
   // Eventlistener Click
   this.marker.addListener("click", () => {
+
+      var animate = this.marker.setAnimation(google.maps.Animation.BOUNCE);
+      setTimeout(() => {this.marker.setAnimation(null); }, 1500);
+    
     // Create an infoView
     var yelp_id = this.id;
     // helper variables to indicate if business is open
-    let b_open = '<span class="text-success">Open</span>'
-    let b_closed = '<span class="text-danger">Closed</span>'
+    let b_open = '<span class="text-success">Open</span>';
+    let b_closed = '<span class="text-danger">Closed</span>';
+
     // Content String
-    let contentString = `<div class="card no-border" style="width: 20rem;">
+    let contentString =
+      `<div class="card no-border" style="width: 20rem;">
   <div class="card-block">
-    <h4 class="card-title">` + this.yelp.name + `</h4>
+    <h4 class="card-title">` +
+      this.yelp.name +
+      `</h4>
   </div>
   <div class="px-3">
   <table class="table table-m">
@@ -90,20 +99,32 @@ var Location = function(data) {
   </thead>
   <tbody>
     <tr>
-      <td>` + this.yelp.rating + `</td>
-      <td>` + this.yelp.review_count + `</td>
-      <td>` + this.yelp.price +`</td>
+      <td>` +
+      this.yelp.rating +
+      `</td>
+      <td>` +
+      this.yelp.review_count +
+      `</td>
+      <td>` +
+      this.yelp.price +
+      `</td>
     </tr>
   </tbody>
 </table>
 </div>
 
 <div class="card-block">
-    <p class="card-text">` + this.yelp.location.formatted_address + `</p>
-    <p class="card-text">` + (this.yelp.hours.is_open_now ? b_open : b_closed ) + `</p>
+    <p class="card-text">` +
+      this.yelp.location.formatted_address +
+      `</p>
+    <p class="card-text">` +
+      (this.yelp.hours.is_open_now ? b_open : b_closed) +
+      `</p>
   </div> 
   <div class="card-block">
-     <a href="` + this.yelp.url + `class="card-link">More Information </a>
+     <a href="` +
+      this.yelp.url +
+      `class="card-link">More Information </a>
   </div>
 </div>`;
 
@@ -111,7 +132,7 @@ var Location = function(data) {
       content: contentString
     });
 
-    // attach infowindo to marker
+    // attach infowindow to marker
     infowindow.open(this.marker.get("map"), this.marker);
   });
 };
@@ -150,4 +171,12 @@ window.app = app;
 
 function createInfoWindowContent(yelp_id) {
   // GraphQL Query
+}
+
+function animateMarker() {
+  if (this.marker.getAnimation() != null) {
+    this.marker.setAnimation(null);
+  } else {
+    this.marker.setAnimation(google.maps.Animation.BOUNCE);
+  }
 }
