@@ -165,6 +165,7 @@ function createInfoView(clickedBusiness) {
       );
     })
     .catch(error => {
+      alert(error.msg);
       console.error(error);
     });
 }
