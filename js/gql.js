@@ -1,25 +1,42 @@
-export function query(gql_string){
+export function query(url,business_id) {
+  // Wrapping fetch
+  var yelp_id = business_id;
 
-  const query_url =
-  "http://localhost:5000/graphql/" + gql_string.replace(/(\r\n|\n|\r)/gm, "");
-
-  fetch(query_url, {
-  method: "post"
-})
-  .then(function(response) {
-    if (response.status !== 200) {
-      console.log(
-        "Looks like there was a problem. Status Code: " + response.status
-      );
-      return;
+  // raw GraphQL Query
+  const query_template = `{
+  business(id: "${yelp_id}") {
+    name
+    rating
+    review_count
+    price
+    url
+    location {
+      formatted_address
     }
-    // Examine the text in the response
-    response.json().then(function(data) {
-      console.log(data);
-    });
-  })
-  .catch(function(err) {
-    console.log("Fetch Error :-S", err);
-  });
+    hours {
+      is_open_now
+    }
+  }
+}`;
 
+  const g_header = { method: "POST", body: query_template };
+
+  return fetch(url, g_header).then(handleResponse, handleNetworkError);
+}
+
+function handleResponse(response) {
+  if (response.ok) {
+    return response.json();
+  } else {
+    return response.json().then(proxy_error => {
+      // query error handled by API Proxy and returns message as JSON with statuscode
+      throw proxy_error;
+    });
+  }
+}
+
+function handleNetworkError(error) {
+  // throw JSON instead of TypeError for general network failures
+  var error_msg = error.message
+  throw { msg: `Yelp API not responding as expected.Please reload site to try again: ${error_msg}` };
 }
