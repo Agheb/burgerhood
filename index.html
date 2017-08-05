@@ -25,7 +25,8 @@
           <input type="text" class="form-control" data-bind="value: Query, valueUpdate: 'keyup'" placeholder="Search">
         </div>
         <div data-bind="foreach: searchResults">
-          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+          
+          <a data-bind="click: clickInfoView" href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
           <div class="d-flex w-100 justify-content-between">
             <h6 class="mb-1" data-bind="text: name"></h6>
           </div>
