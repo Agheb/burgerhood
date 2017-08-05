@@ -4,18 +4,17 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-Blueprint	../main.py	/^from flask import Blueprint, Response, render_template, flash, request, redirect, url_for, jsonify$/;"	kind:namespace	line:3
-Response	../main.py	/^from flask import Blueprint, Response, render_template, flash, request, redirect, url_for, jsonify$/;"	kind:namespace	line:3
-cache	../main.py	/^from proxy.extensions import cache$/;"	kind:namespace	line:5
-flash	../main.py	/^from flask import Blueprint, Response, render_template, flash, request, redirect, url_for, jsonify$/;"	kind:namespace	line:3
-graphql	../main.py	/^def graphql(query):$/;"	kind:function	line:12
-home	../main.py	/^def home():$/;"	kind:function	line:29
-json	../main.py	/^import json$/;"	kind:namespace	line:2
-jsonify	../main.py	/^from flask import Blueprint, Response, render_template, flash, request, redirect, url_for, jsonify$/;"	kind:namespace	line:3
-main	../main.py	/^main = Blueprint('main', __name__)$/;"	kind:variable	line:8
-main.py	../main.py	1;"	kind:file	line:1
-redirect	../main.py	/^from flask import Blueprint, Response, render_template, flash, request, redirect, url_for, jsonify$/;"	kind:namespace	line:3
-render_template	../main.py	/^from flask import Blueprint, Response, render_template, flash, request, redirect, url_for, jsonify$/;"	kind:namespace	line:3
-request	../main.py	/^from flask import Blueprint, Response, render_template, flash, request, redirect, url_for, jsonify$/;"	kind:namespace	line:3
-requests	../main.py	/^import requests$/;"	kind:namespace	line:1
-url_for	../main.py	/^from flask import Blueprint, Response, render_template, flash, request, redirect, url_for, jsonify$/;"	kind:namespace	line:3
+Api	../api-proxy/main.py	/^from flask_restful import Resource, Api$/;"	kind:namespace	line:6
+CORS	../api-proxy/main.py	/^from flask_cors import CORS$/;"	kind:namespace	line:7
+Flask	../api-proxy/main.py	/^from flask import Flask,request,jsonify$/;"	kind:namespace	line:5
+ProxyQuery	../api-proxy/main.py	/^class ProxyQuery(Resource):$/;"	kind:class	line:29
+Resource	../api-proxy/main.py	/^from flask_restful import Resource, Api$/;"	kind:namespace	line:6
+api	../api-proxy/main.py	/^api = Api(app)$/;"	kind:variable	line:11
+app	../api-proxy/main.py	/^app = Flask(__name__)$/;"	kind:variable	line:9
+json	../api-proxy/main.py	/^import json$/;"	kind:namespace	line:4
+jsonify	../api-proxy/main.py	/^from flask import Flask,request,jsonify$/;"	kind:namespace	line:5
+logging	../api-proxy/main.py	/^import logging$/;"	kind:namespace	line:3
+main.py	../api-proxy/main.py	1;"	kind:file	line:1
+post	../api-proxy/main.py	/^    def post(self):$/;"	kind:member	line:30
+request	../api-proxy/main.py	/^from flask import Flask,request,jsonify$/;"	kind:namespace	line:5
+requests	../api-proxy/main.py	/^import requests$/;"	kind:namespace	line:2

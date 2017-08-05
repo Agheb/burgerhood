@@ -9,6 +9,7 @@ const API_ENDPOINT = "http://localhost:5000/graphql"; // subject for change e.g.
 var map;
 var infoWindow;
 
+
 document.addEventListener("DOMContentLoaded", function() {
   if (document.querySelectorAll("#map").length > 0) {
     var js_file = document.createElement("script");
@@ -25,7 +26,7 @@ function initMap() {
       lat: 48.137459,
       lng: 11.575231
     },
-    zoom: 14
+    zoom: 13
   });
   
   infoWindow = new google.maps.InfoWindow({
@@ -68,7 +69,7 @@ var ViewModel = function() {
 
   // initialize searchquery
   this.Query = ko.observable("");
-  // TODO: ES6 Arrow functions
+
   this.searchResults = ko.computed(() => {
     return this.locationsList().filter(location => {
       if (
@@ -151,7 +152,7 @@ function createInfoView(clickedBusiness) {
   clickedBusiness.marker.setAnimation(google.maps.Animation.BOUNCE);
   setTimeout(() => {
     clickedBusiness.marker.setAnimation(null);
-  }, 1500);
+  }, 750);
 
   // Wrapper for GraphQL Client
   query(API_ENDPOINT, clickedBusiness.id)
