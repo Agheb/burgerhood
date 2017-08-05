@@ -60,23 +60,8 @@ var Location = function(data) {
 
 
   this.marker.addListener("click", () => {
-    // animate marker 
-    this.marker.setAnimation(google.maps.Animation.BOUNCE);
-    setTimeout(() => {
-      this.marker.setAnimation(null);
-    }, 1500);
-
-    // Wrapper for GraphQL Client  
-    query(API_ENDPOINT, this.id)
-      .then(response => {
-        let data = response.data.business;
-        let content = createContentString(data);
-        this.infowindow.setContent(content);
-        this.infowindow.open(this.marker.get("map"), this.marker);
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    let _this = this;
+    createInfoView(_this);
   });
 };
 
@@ -116,7 +101,7 @@ function createContentString(data){
     // show User if business is open or not 
     let b_open = '<span class="text-success">Open</span>';
     let b_closed = '<span class="text-danger">Closed</span>';
-
+    console.log("Hallo"+data.hours[0].is_open_now);
     // Content String
     let contentString =
       `<div class="card no-border" style="width: 20rem;">
@@ -167,3 +152,26 @@ function createContentString(data){
 
 return contentString;
 };
+
+function createInfoView(clickedBusiness){
+
+    // animate marker 
+    clickedBusiness.marker.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(() => {
+      clickedBusiness.marker.setAnimation(null);
+    }, 1500);
+
+    // Wrapper for GraphQL Client  
+    query(API_ENDPOINT, clickedBusiness.id)
+      .then(response => {
+        let data = response.data.business;
+        let content = createContentString(data);
+        clickedBusiness.infowindow.setContent(content);
+        clickedBusiness.infowindow.open(clickedBusiness.marker.get("map"), clickedBusiness.marker);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  
+};
+  
