@@ -5,6 +5,8 @@ import { query } from "./gql.js";
 var ko = require("knockout");
 var LocationModel = require("../locations.json");
 
+'use strict';
+
 const API_ENDPOINT = "http://agheb.pythonanywhere.com/graphql";
 var map;
 var infoWindow;

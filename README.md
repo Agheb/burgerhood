@@ -1,49 +1,29 @@
-# Webpack Boilerplate
+# Neighborhood Map Project - Munich's Best Burger Joints
 
-A webpack boilerplate that includes the following libs:
+A KnockoutJS SPA that provides an interactive map , showing you the locations of Munich's Best Burgers.
+The SPA uses Yelp's GraphQL API and even includes a simple GraphQL Client for the API.
 
-* jQuery
-* bootstrap
-* font-awesome
-* waypoints
-* jquery.scrollto
-* animate.css
 
-in order to quickly build up a production-ready marketing website.
+### Backend API Server
 
-### Example Page
-[DEMO](http://geniuscarrier.com/demo/webpack-boilerplate/)
+Yelp's API is intended for backend use (e.g. CORS Headers are not supported). As a possible Workaround, i wrote a simple Flask Application to bounce requests to Yelp. It is currently running on PythonAnywhere.com and the API Proxy can be called from any domain.
 
-![GIF](http://geniuscarrier.me/images/webpack-boilerplate.gif)
+### Technologies
 
-### Install dependencies
+Front-End: Webpack, Babel, Bootstrap v4, Fetch API etc
+Back-End: Flask-Restful, Flask-Cors, Requests
+
+### Usage 
+
+Open index.html 
+
+### Local Development
 
 ```
-npm install
+npm run dev
 ```
+You can also run a local API Proxy Server. Install all the dependencies from requirements.txt into your environment and run:
 
-### Developing locally
-
-1. Run
-
-	```
-	npm run dev
-	```
-
-2. In your browser, navigate to: [http://localhost:8080/](http://localhost:8080/)
-
-### Publish
-
-1. In `webpack.config.js` file, replace `www.example.com` with the real domain name.
-
-2. Run
-
-	```
-	npm run build
-	```
-
-3. Copy the following folders/files to web server
-
-	/build,
-	/image,
-	index.html
+```
+python main.py
+```
