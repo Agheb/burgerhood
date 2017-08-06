@@ -5,7 +5,7 @@ import { query } from "./gql.js";
 var ko = require("knockout");
 var LocationModel = require("../locations.json");
 
-const API_ENDPOINT = "http://localhost:5000/graphql"; // subject for change e.g. production
+const API_ENDPOINT = "http://agheb.pythonanywhere.com/graphql"; // subject for change e.g. production
 var map;
 var infoWindow;
 
