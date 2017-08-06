@@ -5,11 +5,9 @@ import { query } from "./gql.js";
 var ko = require("knockout");
 var LocationModel = require("../locations.json");
 
-const API_ENDPOINT = "http://agheb.pythonanywhere.com/graphql"; // subject for change e.g. production
+const API_ENDPOINT = "http://agheb.pythonanywhere.com/graphql"; 
 var map;
 var infoWindow;
-
-
 
 function initMap() {
   // initialize  map and InfoWindow
@@ -20,14 +18,19 @@ function initMap() {
     },
     zoom: 13
   });
-  
+
   infoWindow = new google.maps.InfoWindow({
-        content: ''
-    });
+    content: ""
+  });
+
+  // resize maps according to 
+  google.maps.event.addDomListener(window, "resize", () => {
+    var center = map.getCenter();
+    google.maps.event.trigger(map, "resize");
+    map.setCenter(center);
+  });
 }
 window.initMap = initMap; // add function to global scope (https://stackoverflow.com/questions/40575637/how-to-use-webpack-with-google-maps-api)
-
-
 
 var Location = function(data) {
   this.name = data.name;
@@ -35,7 +38,7 @@ var Location = function(data) {
   this.long = data.coordinates[1];
   this.address = data.address;
   this.id = data.yelp_id;
-  // fire click event from list view 
+  // fire click event from list view
   this.clickInfoView = () => {
     let _this = this;
     createInfoView(this);
@@ -48,9 +51,8 @@ var Location = function(data) {
     title: data.name
   });
 
-  // set InfoWindow 
+  // set InfoWindow
   this.infowindow = new google.maps.InfoWindow();
-
 
   this.marker.addListener("click", () => {
     let _this = this;
@@ -58,10 +60,9 @@ var Location = function(data) {
   });
 };
 
-
 var ViewModel = function() {
   this.locationsList = ko.observableArray([]);
-  // load data from locations.json  file 
+  // load data from locations.json  file
   LocationModel.locations.map(location => {
     this.locationsList.push(new Location(location));
   });
@@ -72,13 +73,13 @@ var ViewModel = function() {
   this.searchResults = ko.computed(() => {
     return this.locationsList().filter(location => {
       if (
-        // checks if searchquery is substring of any location name  
+        // checks if searchquery is substring of any location name
         location.name.toLowerCase().indexOf(this.Query().toLowerCase()) >= 0
       ) {
         location.marker.setVisible(true);
         return true;
       } else {
-        // no match therefor markers removed from map 
+        // no match therefor markers removed from map
         location.marker.setVisible(false);
         return false;
       }
@@ -86,12 +87,10 @@ var ViewModel = function() {
   });
 };
 
-
-
 function createContentString(data) {
-   // create template strings for infoWindow from API Response
-  
-   // text color if business is open 
+  // create template strings for infoWindow from API Response
+
+  // text color if business is open
   let b_open = '<span class="text-success">Open</span>';
   let b_closed = '<span class="text-danger">Closed</span>';
   // Content String
@@ -146,7 +145,6 @@ function createContentString(data) {
 }
 
 function createInfoView(clickedBusiness) {
-
   infoWindow.close();
 
   // animate marker
@@ -158,16 +156,16 @@ function createInfoView(clickedBusiness) {
   // execute API request via GraphQL asynchronously
   query(API_ENDPOINT, clickedBusiness.id)
     .then(response => {
-      // OK !  
+      // OK !
       let data = response.data.business;
       let content = createContentString(data);
-        infoWindow.setContent(content);
-        infoWindow.open(
+      infoWindow.setContent(content);
+      infoWindow.open(
         clickedBusiness.marker.get("map"),
         clickedBusiness.marker
       );
     })
-    // NOT OK ! inform user gracefully 
+    // NOT OK ! inform user gracefully
     .catch(error => {
       alert(error.msg);
       console.error(error);
@@ -178,4 +176,14 @@ function app() {
   initMap();
   ko.applyBindings(new ViewModel());
 }
-window.app = app; 
+window.app = app;
+
+// Fix for Google Map + .Container-fluid https://github.com/twbs/bootstrap/issues/2475
+$(window)
+  .resize(function() {
+    let h = $(window).height(),
+      offsetTop = 20; 
+
+    $("#map").css("height", h - offsetTop);
+  })
+  .resize();
