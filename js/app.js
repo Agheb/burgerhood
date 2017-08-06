@@ -127,18 +127,24 @@ function createContentString(data) {
 </div>
 
 <div class="card-block">
+     <p class="card-text lead">` +
+    (data.hours[0].is_open_now ? b_open : b_closed) +
+    `</p>
     <p class="card-text">` +
     data.location.formatted_address +
     `</p>
-    <p class="card-text">` +
-    (data.hours[0].is_open_now ? b_open : b_closed) +
-    `</p>
-  </div> 
-  <div class="card-block">
      <a href="` +
     data.url +
     `class="card-link">More Information </a>
+  </div> 
+  <div class="card-block">
   </div>
+  <div>
+     <p class="text-center">powered by <span class="fa-stack fa-lg">
+  <i class="fa fa-square fa-stack-2x text-danger"></i>
+  <i class="fa fa-yelp fa-stack-1x fa-inverse "></i>
+</span></p>
+</div>
 </div>`;
 
   return contentString;
