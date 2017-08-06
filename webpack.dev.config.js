@@ -4,7 +4,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var extractCSS = new ExtractTextPlugin("style.css");
 
 var output = {
-  path: path.resolve(__dirname, "build"),
+  path: path.resolve(__dirname, "dist"),
   publicPath: "http://localhost:8080/build/",
   filename: "bundle.js"
 };

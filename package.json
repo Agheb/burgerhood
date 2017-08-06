@@ -1,5 +1,5 @@
 {
-  "name": "webpack-boilerplate",
+  "name": "Amans Webpack Boilerplate",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -8,8 +8,8 @@
     "dev": "npm run lint && webpack-dev-server --config webpack.dev.config.js --inline",
     "lint": "./node_modules/.bin/eslint js"
   },
-  "author": "Yang Zhao",
-  "license": "ISC",
+  "author": "Amanuel Ghebreweldi",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.7.2",
     "babel-eslint": "^6.1.0",

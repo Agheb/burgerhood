@@ -2,7 +2,7 @@
 import requests
 import logging
 import json
-from flask import Flask,request,jsonify
+from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
 from flask_cors import CORS
 
@@ -25,6 +25,7 @@ requests_log = logging.getLogger("requests.packages.urllib3")
 requests_log.setLevel(logging.DEBUG)
 requests_log.propagate = True
 """
+
 
 class ProxyQuery(Resource):
     def post(self):

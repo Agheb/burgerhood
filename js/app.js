@@ -5,7 +5,7 @@ import { query } from "./gql.js";
 var ko = require("knockout");
 var LocationModel = require("../locations.json");
 
-const API_ENDPOINT = "http://agheb.pythonanywhere.com/graphql"; 
+const API_ENDPOINT = "http://agheb.pythonanywhere.com/graphql";
 var map;
 var infoWindow;
 
@@ -23,7 +23,7 @@ function initMap() {
     content: ""
   });
 
-  // resize maps according to 
+  // resize maps according to
   google.maps.event.addDomListener(window, "resize", () => {
     var center = map.getCenter();
     google.maps.event.trigger(map, "resize");
@@ -188,7 +188,7 @@ window.app = app;
 $(window)
   .resize(function() {
     let h = $(window).height(),
-      offsetTop = 20; 
+      offsetTop = 20;
 
     $("#map").css("height", h - offsetTop);
   })
