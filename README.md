@@ -1,6 +1,6 @@
 # Neighborhood Map Project - Munich's Best Burger Joints
 
-A KnockoutJS SPA that provides an interactive map , showing you the locations of Munich's Best Burgers.
+A KnockoutJS SPA that provides an interactive map, showing you the locations of Munich's Best Burgers.
 The SPA uses Yelp's GraphQL API and even includes a simple GraphQL Client for the API.
 
 
@@ -10,8 +10,8 @@ Yelp's API is intended for backend use (e.g. CORS Headers are not supported). As
 
 ### Technologies
 
-Front-End: Webpack, Babel, Bootstrap v4, Fetch API etc
-Back-End: Flask-Restful, Flask-Cors, Requests
+* Front-End: Webpack, Babel, Bootstrap v4, Fetch API etc
+* Back-End: Flask-Restful, Flask-Cors, Requests
 
 ### Usage 
 
