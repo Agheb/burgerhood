@@ -41,6 +41,6 @@ npm build
 3. Copy `index.html`, `/dist` and `/images` to your server
 
 
-### Resources 
+### Ressources 
 
  * Webpack Boilerplate
