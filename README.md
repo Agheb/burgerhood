@@ -9,8 +9,8 @@ Yelp's Fusion API is intended for backend use (e.g. CORS Headers are not support
 
 ### Technologies
 
-Front-End: Webpack, Babel, Bootstrap v4, Fetch API etc
-Back-End: Flask-Restful, Flask-Cors, Requests
+* Front-End: Webpack, Babel, Bootstrap v4, Fetch API etc
+* Back-End: Flask-Restful, Flask-Cors, Requests
 
 ###  run & develop locally 
 
