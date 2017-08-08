@@ -5,7 +5,7 @@ The application utilizes Yelp's GraphQL API. GraphQL queries are executed by a c
 
 ### Backend API Server
 
-Yelp's Fusion API is intended for backend use (e.g. CORS Headers are not supported). As a possible Workaround, i wrote a simple Flask Application to bounce requests to Yelp. It is currently running on PythonAnywhere.com and the API Proxy can be called from any domain. You can 
+Yelp's Fusion API is intended for backend use (e.g. CORS Headers are not supported). As a possible workaround, i wrote a simple Flask Application to bounce requests to Yelp. It is currently running on PythonAnywhere.com and the API Proxy can be called from any domain.
 
 ### Technologies
 
@@ -26,9 +26,10 @@ npm run dev
 
 ###  Run API Proxy Server locally (optional)
 
-1. cd into dir `api-proxy`
+1. cd into `api-proxy`
 2. `pip install requirements.txt` in your environment
-3. Run `python main.py` (tested on Python version 3.6)
+3. In `app.js` replace `API_ENDPOINT` with your local server address (e.g. `http://localhost:5000/`)
+4. Run `python main.py` (tested on Python version 3.6)
 
 
 ### Build production version of application with Webpack
