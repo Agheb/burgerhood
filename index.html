@@ -25,13 +25,13 @@
           <input type="text" class="form-control" data-bind="value: Query, valueUpdate: 'keyup'" placeholder="Search">
         </div>
         <div data-bind="foreach: searchResults">
-          
-          <a data-bind="click: clickInfoView" href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
-          <div class="d-flex w-100 justify-content-between">
-            <h6 class="mb-1" data-bind="text: name"></h6>
-          </div>
-          <p class="mb-1 hidden-md-down" data-bind='text: address'></p>
-        </a>
+
+          <a data-bind="click: clickInfoView" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h6 class="mb-1" data-bind="text: name"></h6>
+            </div>
+            <p class="mb-1 hidden-md-down" data-bind='text: address'></p>
+          </a>
         </div>
       </div>
       <div class="col-md-10 no-gutter">
@@ -42,9 +42,14 @@
       </div>
     </div>
   </div>
-  <script defer
-      src="https://maps.googleapis.com/maps/api/js?callback=app&key=AIzaSyBeAR2QSBsI-Xch0uTh1yOADUDHifjzWTY" onerror="gmaps_error()">
-    </script>
+  <script>
+    // handle google maps error
+    function gmaps_error() {
+      alert("Google Maps was not successfully loaded. Reload site to try again");
+    }
+  </script>
+  <script defer src="https://maps.googleapis.com/maps/api/js?callback=app&key=AIzaSyBeAR2QSBsI-Xch0uTh1yOADUDHifjzWTY" onerror="gmaps_error()">
+  </script>
   <script src="dist/bundle.js"></script>
 </body>
 

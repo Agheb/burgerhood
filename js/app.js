@@ -195,9 +195,3 @@ $(window)
     $("#map").css("height", h - offsetTop);
   })
   .resize();
-
-// handle google maps error
-function gmaps_error() {
-	alert("Google Maps was not successfully loaded. Reload site to try again");
-}
-window.gmaps_error;
